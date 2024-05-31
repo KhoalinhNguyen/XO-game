@@ -15,13 +15,13 @@ public class Main {
 
         for(int x = 0; x < 2; x++) {
             System.out.print("Player " + (x+1) +":" );
-            players[x].setPlayerName(scan.next());;
+            players[x].setPlayerName(scan.next());
             System.out.print("Player " + (x+1) + " mark:");
             players[x].setMark(scan.next().charAt(0));
         }
 
         Game game = gameService.startNewGame(players[0], players[1]);
-        System.out.println("");
+        System.out.println();
 
         for( int i = 0; i < 9; i++) {
             System.out.println("round" + (i+1));
@@ -34,7 +34,17 @@ public class Main {
                 char move = scan.next().charAt(0);
                 gameService.playMove(move, game);
             }
+            if(gameService.checkWinner(game)) {
+                if(game.getCurrentPlayer() == game.getPlayer1()) {
+                    System.out.println("The winner is: " + game.getPlayer2().getPlayerName());
+                } else {
+                    System.out.println("The winner is: " + game.getPlayer1().getPlayerName());
+                }
+                return;
+            }
         }
+        System.out.println("The game is tie!");
+        scan.close();
     }
 
 }

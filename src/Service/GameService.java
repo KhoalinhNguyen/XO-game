@@ -16,7 +16,7 @@ public class GameService {
     private void initBoard(Board board) {
         for(char i : board.getBoardCells()) {
             if(i%3 == 0) {
-                System.out.println("");
+                System.out.println();
                 System.out.print("|");
             }
             System.out.print(i + "|");
@@ -31,13 +31,13 @@ public class GameService {
 
         for(int i = 0; i < board.getBoardCells().length; i++) {
             if(i%3 == 0) {
-                System.out.println("");
+                System.out.println();
                 System.out.print("|");
             }
             System.out.print( board.getBoardCells()[i]+ "|");
         }
 
-        System.out.println("");
+        System.out.println();
         // switch turn
         if(game.getCurrentPlayer() == game.getPlayer1()) {
             game.setCurrentPlayer(game.getPlayer2());
@@ -47,7 +47,22 @@ public class GameService {
     }
 
     public boolean checkWinner(Game game) {
-        Board board = game.getBoard();
-        return false;
+        char[] board = game.getBoard().getBoardCells();
+        // check rows
+        for(int i = 0; i < 3; i++) {
+            if(board[i*3] == board[i*3 + 1] && board[i*3 + 1] == board[i*3 + 2] ) {
+                return true;
+            }
+        }
+        // check col
+        for(int i = 0; i < 3; i++) {
+            if(board[i] == board[i+3] && board[i+3] == board[i+6]) {
+                return true;
+            }
+        }
+        // check diagonal
+        return (board[0] == board[4] && board[4] == board[8])
+                || (board[2] == board[4] && board[4] == board[6]);
     }
+
 }
